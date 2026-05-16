@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Batch '26 — A Journey We'll Always Carry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0b;
+    --bg2: #111114;
+    --bg3: #18181c;
+    --gold: #c9a84c;
+    --gold-light: #e8c76a;
+    --gold-dim: rgba(201,168,76,0.15);
+    --text: #e8e0d5;
+    --text-dim: #8a8075;
+    --text-muted: #555;
+    --border: rgba(201,168,76,0.2);
+    --border-dim: rgba(255,255,255,0.06);
+    --white: #fff;
+    --serif: 'Playfair Display', serif;
+    --serif2: 'Cormorant Garamond', serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 60px;
+    background: rgba(10,10,11,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-dim);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .nav-logo-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 13px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  .nav-logo-text {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+  }
+
+  .nav-links li a {
+    display: block;
+    padding: 0 18px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav-links li a:hover, .nav-links li a.active {
+    color: var(--text);
+  }
+
+  .nav-links li a.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 18px; right: 18px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px 1px 0 0;
+  }
+
+  .nav-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 5px 14px 5px 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .nav-user:hover { background: var(--gold-dim); }
+
+  .nav-user-avatar {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  /* ─── SECTIONS ─── */
+  .page {
+    display: none;
+    min-height: 100vh;
+    padding-top: 60px;
+  }
+
+  .page.active { display: block; }
+
+  /* ─── HERO ─── */
+  #hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .star {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 50%;
+    animation: twinkle var(--d,3s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+  }
+
+  .hero-subtitle {
+    font-family: var(--serif2);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(60px, 10vw, 120px);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+
+  .hero-dash {
+    color: var(--text-dim);
+    font-weight: 300;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 28px auto;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+
+  .hero-body {
+    font-size: 15px;
+    color: var(--text-dim);
+    max-width: 480px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.1s forwards;
+  }
+
+  .hero-cta {
+    margin-top: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.4s forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+  }
+
+  .hero-cta-text {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .hero-cursor {
+    width: 1px;
+    height: 48px;
+    background: var(--gold);
+    animation: blink 1.2s ease-in-out infinite;
+  }
+
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── JOURNEY ─── */
+  .journey-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 2rem;
+  }
+
+  .journey-entry {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    padding: 80px 0;
+    border-bottom: 1px solid var(--border-dim);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .journey-entry.visible { opacity: 1; transform: none; }
+
+  .journey-entry:last-child { border-bottom: none; }
+
+  .journey-entry:nth-child(even) .journey-text { order: 2; }
+  .journey-entry:nth-child(even) .journey-photo { order: 1; }
+
+  .journey-year {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .journey-text h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .journey-text h2 em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .journey-text p {
+    font-family: var(--serif2);
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-dim);
+  }
+
+  .polaroid {
+    background: #1a1a1e;
+    padding: 12px 12px 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    transform: rotate(var(--rot, -2deg));
+    transition: transform 0.3s ease;
+    position: relative;
+  }
+
+  .polaroid:hover { transform: rotate(0deg) scale(1.02); }
+
+  .polaroid-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .polaroid-caption {
+    margin-top: 12px;
+    font-family: var(--serif2);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-dim);
+    text-align: center;
+  }
+
+  .polaroid-dot {
+    position: absolute;
+    bottom: 16px; right: 16px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #e04040;
+  }
+
+  /* ─── YEARBOOK ─── */
+  .yearbook-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 2rem;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .section-header h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .section-header p {
+    font-family: var(--serif2);
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+
+  .filter-btn {
+    padding: 7px 18px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--border-dim);
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #000;
+  }
+
+  .filter-btn:hover:not(.active) {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 24px;
+    max-width: 360px;
+  }
+
+  .search-bar input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .search-bar input::placeholder { color: var(--text-muted); }
+
+  .search-icon { color: var(--text-muted); font-size: 16px; flex-shrink: 0; }
+
+  .yearbook-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2px;
+  }
+
+  .student-card {
+    background: var(--bg2);
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    transition: all 0.3s;
+  }
+
+  .student-card:hover .card-overlay { opacity: 1; }
+  .student-card:hover .card-photo { filter: brightness(0.5); }
+
+  .card-photo {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: filter 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 56px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.08);
+    background: var(--bg3);
+    letter-spacing: -0.02em;
+  }
+
+  .card-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    position: absolute; inset: 0;
+  }
+
+  .card-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 12px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  }
+
+  .card-name {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 2px;
+  }
+
+  .card-dept {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .card-socials {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .social-btn {
+    width: 24px; height: 24px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.12);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--white);
+    font-size: 11px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .social-btn:hover { background: var(--gold); color: #000; }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .card-overlay-btn {
+    padding: 8px 20px;
+    background: var(--gold);
+    color: #000;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  /* ─── PROFILE MODAL ─── */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .modal-backdrop.open { display: flex; }
+
+  .modal {
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 740px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    color: var(--text);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    z-index: 1;
+  }
+
+  .modal-top {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0;
+  }
+
+  .modal-photo {
+    height: 260px;
+    background: var(--bg3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif);
+    font-size: 72px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.06);
+    border-radius: 12px 0 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .modal-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    position: absolute; inset: 0;
+  }
+
+  .modal-info {
+    padding: 28px 28px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .modal-name {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.1;
+  }
+
+  .modal-dept {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .modal-meta {
+    font-family: var(--serif2);
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 2;
+  }
+
+  .modal-socials {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .modal-social {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .modal-social:hover { border-color: var(--gold); color: var(--gold); }
+
+  .modal-archive {
+    padding: 24px 28px;
+    border-top: 1px solid var(--border-dim);
+  }
+
+  .archive-label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .archive-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 240px;
+    overflow-y: auto;
+    padding-right: 4px;
+    margin-bottom: 20px;
+  }
+
+  .message-item {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+
+  .message-text {
+    font-family: var(--serif2);
+    font-size: 15px;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .message-author {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .sign-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sign-form textarea {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: var(--serif2);
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s;
+    min-height: 80px;
+  }
+
+  .sign-form textarea:focus { border-color: var(--gold); }
+  .sign-form textarea::placeholder { color: var(--text-muted); }
+
+  .sign-form-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .sign-form input {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 13px;
+    outline: none;
+    flex: 1;
+    transition: border-color 0.2s;
+  }
+
+  .sign-form input:focus { border-color: var(--gold); }
+  .sign-form input::placeholder { color: var(--text-muted); }
+
+  .btn-gold {
+    padding: 10px 24px;
+    background: var(--gold);
+    color: #000;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-gold:hover { background: var(--gold-light); }
+
+  .btn-outline {
+    padding: 10px 24px;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--border-dim);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ─── ARCHIVE / MEDIA VAULT ─── */
+  .archive-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 2rem;
+  }
+
+  .archive-hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .archive-hero p {
+    font-family: var(--serif2);
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .archive-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .sort-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .sort-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  .upload-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 20px;
+    background: var(--gold);
+    border: none;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #000;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .upload-btn:hover { background: var(--gold-light); }
+
+  .photo-masonry {
+    columns: 3;
+    column-gap: 8px;
+    gap: 8px;
+  }
+
+  @media (max-width: 768px) { .photo-masonry { columns: 2; } }
+
+  .photo-item {
+    break-inside: avoid;
+    margin-bottom: 8px;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--bg3);
+    display: block;
+  }
+
+  .photo-item img {
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    transition: transform 0.3s, filter 0.3s;
+  }
+
+  .photo-item:hover img { transform: scale(1.04); filter: brightness(0.7); }
+
+  .photo-item .photo-hover {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 12px 14px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .photo-item:hover .photo-hover { opacity: 1; }
+
+  .photo-hover-date {
+    font-family: var(--serif2);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .photo-hover-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--bg3);
+  }
+
+  /* ─── THE WALL ─── */
+  .wall-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 2rem;
+  }
+
+  .wall-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    background: var(--gold-dim);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  .wall-header h1 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .wall-header p {
+    font-family: var(--serif2);
+    font-size: 16px;
+    color: var(--text-dim);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  .wall-add {
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 40px;
+  }
+
+  .wall-add h3 {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .wall-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .wall-form input,
+  .wall-form textarea {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: var(--serif2);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .wall-form textarea { min-height: 100px; resize: none; }
+  .wall-form input:focus, .wall-form textarea:focus { border-color: var(--gold); }
+  .wall-form input::placeholder, .wall-form textarea::placeholder { color: var(--text-muted); }
+
+  .wall-form-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .anon-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .toggle-box {
+    width: 16px; height: 16px;
+    border: 1px solid var(--border-dim);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    color: var(--gold);
+    transition: border-color 0.2s;
+  }
+
+  .anon-toggle.checked .toggle-box { border-color: var(--gold); background: var(--gold-dim); }
+
+  .notes-grid {
+    columns: 4;
+    column-gap: 12px;
+  }
+
+  @media (max-width: 960px) { .notes-grid { columns: 3; } }
+  @media (max-width: 640px) { .notes-grid { columns: 2; } }
+
+  .note-card {
+    break-inside: avoid;
+    margin-bottom: 12px;
+    background: #f9f6ee;
+    border-radius: 2px;
+    padding: 16px;
+    position: relative;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3), 0 8px 32px rgba(0,0,0,0.2);
+    transform: rotate(var(--r, -1deg));
+    transition: transform 0.2s;
+    cursor: default;
+  }
+
+  .note-card:hover { transform: rotate(0deg) scale(1.02); z-index: 10; }
+
+  .note-card.note-light { background: #f9f6ee; }
+  .note-card.note-yellow { background: #fef9c3; }
+  .note-card.note-pink { background: #fce7f3; }
+  .note-card.note-blue { background: #e0f2fe; }
+  .note-card.note-green { background: #dcfce7; }
+  .note-card.note-purple { background: #f3e8ff; }
+
+  .note-text {
+    font-family: 'Georgia', serif;
+    font-size: 13px;
+    color: #2a2520;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    word-break: break-word;
+  }
+
+  .note-from {
+    font-size: 11px;
+    color: #6b5e4e;
+    font-style: italic;
+  }
+
+  .note-pin {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #c9a84c;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  /* ─── UPLOAD MODAL ─── */
+  .upload-modal {
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    padding: 32px;
+    position: relative;
+  }
+
+  .upload-drop {
+    border: 2px dashed var(--border-dim);
+    border-radius: 10px;
+    padding: 48px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    margin-bottom: 20px;
+  }
+
+  .upload-drop:hover { border-color: var(--gold); }
+
+  .upload-drop-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
+
+  .upload-drop p {
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  .upload-drop span { color: var(--gold); cursor: pointer; }
+
+  /* ─── TOAST ─── */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--bg3);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 13px;
+    color: var(--gold);
+    z-index: 9999;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ─── LIGHTBOX ─── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 3000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    color: var(--text);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  /* ─── MISC ─── */
+  .gold-line {
+    width: 40px; height: 2px;
+    background: var(--gold);
+    margin: 16px 0;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+    font-family: var(--serif2);
+    font-style: italic;
+    font-size: 16px;
+  }
+
+  .photo-grid-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg3);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 12px;
+    overflow: hidden;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-links li a { padding: 0 10px; font-size: 12px; }
+    .nav-user-name { display: none; }
+    .modal-top { grid-template-columns: 1fr; }
+    .modal-photo { border-radius: 12px 12px 0 0; height: 200px; }
+    .journey-entry { grid-template-columns: 1fr; gap: 32px; }
+    .journey-entry:nth-child(even) .journey-text, .journey-entry:nth-child(even) .journey-photo { order: unset; }
+    .photo-masonry { columns: 2; }
+    .yearbook-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  }
+
+  /* Photo placeholder gradients */
+  .ph-1 { background: linear-gradient(135deg, #1a1f2e 0%, #0f1520 100%); }
+  .ph-2 { background: linear-gradient(135deg, #1e1a1a 0%, #120f0f 100%); }
+  .ph-3 { background: linear-gradient(135deg, #1a1e1a 0%, #0f140f 100%); }
+  .ph-4 { background: linear-gradient(135deg, #1e1a1e 0%, #12101a 100%); }
+  .ph-5 { background: linear-gradient(135deg, #1e1e1a 0%, #141410 100%); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo" onclick="showSection('hero')">
+    <div class="nav-logo-icon">B</div>
+    <span class="nav-logo-text">Batch '26</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showSection('journey')" id="nav-journey">The Journey</a></li>
+    <li><a href="#" onclick="showSection('yearbook')" id="nav-yearbook">Yearbook</a></li>
+    <li><a href="#" onclick="showSection('archive')" id="nav-archive">Media Vault</a></li>
+    <li><a href="#" onclick="showSection('wall')" id="nav-wall">The Wall</a></li>
+  </ul>
+  <div class="nav-user" onclick="openProfileSelf()">
+    <div class="nav-user-avatar">SU</div>
+    <span class="nav-user-name">Sheikh Uneeb</span>
+  </div>
+</nav>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section id="hero">
+  <div class="hero-stars" id="heroStars"></div>
+  <p class="hero-subtitle">A Journey We'll Always Carry</p>
+  <h1 class="hero-title">
+    Batch <em>2022</em><span class="hero-dash">—</span>26
+  </h1>
+  <div class="hero-divider"></div>
+  <p class="hero-body">Four years of laughter, late nights, and lessons learned. Join us as we look back on the moments that defined us.</p>
+  <div class="hero-cta" onclick="showSection('journey')">
+    <span class="hero-cta-text">Click to start the journey</span>
+    <div class="hero-cursor"></div>
+  </div>
+</section>
+
+<!-- ══════════════════ JOURNEY ══════════════════ -->
+<div class="page" id="journey">
+  <div class="journey-wrap">
+    <div class="journey-entry" data-rot="-2">
+      <div class="journey-text">
+        <div class="journey-year">2022</div>
+        <h2>The Beginning of <em>Something Beautiful</em></h2>
+        <p>Freshers day, orientation, and the nervous energy of meeting hundreds of strangers who would soon become family. We walked in as individuals and walked out as a batch. The campus felt huge; the future felt endless.</p>
+      </div>
+      <div class="journey-photo">
+        <div class="polaroid" style="--rot: -2deg">
+          <div class="polaroid-img ph-1" style="height: 220px; border-radius: 2px;">
+            <span style="position:absolute; font-family: var(--serif); font-size: 48px; font-weight: 700; color: rgba(255,255,255,0.06);">2022</span>
+          </div>
+          <p class="polaroid-caption">Fresher's Day — we arrived!</p>
+          <div class="polaroid-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="journey-entry">
+      <div class="journey-text">
+        <div class="journey-year">2023</div>
+        <h2>Finding Our <em>Rhythm</em></h2>
+        <p>Second year hit different. We found our tribes, our haunts, our routines. Lab sessions that stretched past midnight, chai breaks that turned into two-hour conversations. We hosted our first major events and realized what we were capable of.</p>
+      </div>
+      <div class="journey-photo">
+        <div class="polaroid" style="--rot: 1.5deg">
+          <div class="polaroid-img ph-2" style="height: 220px; border-radius: 2px;">
+            <span style="position:absolute; font-family: var(--serif); font-size: 48px; font-weight: 700; color: rgba(255,255,255,0.06);">2023</span>
+          </div>
+          <p class="polaroid-caption">Tech Fest — we owned the stage</p>
+          <div class="polaroid-dot" style="background:#4ea8e8"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="journey-entry">
+      <div class="journey-text">
+        <div class="journey-year">2024</div>
+        <h2>A Goodbye <em>Worth Remembering</em></h2>
+        <p>Before it was our turn to leave, we made sure the batch ahead of us got the send-off they deserved. The decor, the performances, the emotions — we poured everything into giving our seniors a farewell they'd never forget.</p>
+      </div>
+      <div class="journey-photo">
+        <div class="polaroid" style="--rot: -1deg">
+          <div class="polaroid-img ph-3" style="height: 220px; border-radius: 2px;">
+            <span style="position:absolute; font-family: var(--serif); font-size: 48px; font-weight: 700; color: rgba(255,255,255,0.06);">2024</span>
+          </div>
+          <p class="polaroid-caption">Farewell night — we said goodbye, beautifully</p>
+          <div class="polaroid-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="journey-entry">
+      <div class="journey-text">
+        <div class="journey-year">2025</div>
+        <h2>Fiesta, <em>Chaos &amp; Glory</em></h2>
+        <p>The annual fest was ours to run. Months of planning condensed into three days of electric energy. We danced, performed, competed, and collapsed — and then laughed about it for weeks. This was the year we truly became legends of the campus.</p>
+      </div>
+      <div class="journey-photo">
+        <div class="polaroid" style="--rot: 2deg">
+          <div class="polaroid-img ph-4" style="height: 220px; border-radius: 2px;">
+            <span style="position:absolute; font-family: var(--serif); font-size: 48px; font-weight: 700; color: rgba(255,255,255,0.06);">2025</span>
+          </div>
+          <p class="polaroid-caption">Fiesta '25 — the night we owned it</p>
+          <div class="polaroid-dot" style="background:#e8c76a"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="journey-entry">
+      <div class="journey-text">
+        <div class="journey-year">2026</div>
+        <h2>The <em>Last Chapter</em></h2>
+        <p>Final exams, last lectures, and the bittersweet air of endings. We sat in classrooms that felt smaller now, walked corridors we could navigate blindfolded. And then came the final farewell — our own. It was everything we hoped it would be.</p>
+      </div>
+      <div class="journey-photo">
+        <div class="polaroid" style="--rot: -1.5deg">
+          <div class="polaroid-img ph-5" style="height: 220px; border-radius: 2px;">
+            <span style="position:absolute; font-family: var(--serif); font-size: 48px; font-weight: 700; color: rgba(255,255,255,0.06);">2026</span>
+          </div>
+          <p class="polaroid-caption">Our farewell — full circle</p>
+          <div class="polaroid-dot" style="background:#c084fc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ YEARBOOK ══════════════════ -->
+<div class="page" id="yearbook">
+  <div class="yearbook-wrap">
+    <div class="section-header">
+      <h1>The Class of '26</h1>
+      <p>Faces that defined our journey. Moments that became memories. Click a card to sign their yearbook.</p>
+    </div>
+
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
+      <div class="search-bar">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="yearbook-search" placeholder="Find a batchmate..." oninput="filterYearbook()">
+      </div>
+      <div style="font-size:13px; color:var(--text-muted);" id="yearbook-count"></div>
+    </div>
+
+    <div class="filter-bar" id="dept-filters">
+      <button class="filter-btn active" onclick="filterDept('all',this)">All</button>
+      <button class="filter-btn" onclick="filterDept('CSE',this)">CSE</button>
+      <button class="filter-btn" onclick="filterDept('CSE(AIDS)',this)">CSE(AIDS)</button>
+      <button class="filter-btn" onclick="filterDept('CSE(CYBER)',this)">CSE(CYBER)</button>
+      <button class="filter-btn" onclick="filterDept('MECH',this)">MECH</button>
+      <button class="filter-btn" onclick="filterDept('CIVIL',this)">CIVIL</button>
+      <button class="filter-btn" onclick="filterDept('EC',this)">EC</button>
+      <button class="filter-btn" onclick="filterDept('EX',this)">EX</button>
+    </div>
+
+    <div class="yearbook-grid" id="yearbook-grid"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ ARCHIVE ══════════════════ -->
+<div class="page" id="archive">
+  <div class="archive-wrap">
+    <div class="archive-hero">
+      <h1>The Archive</h1>
+      <p>A cinematic collection of fleeting moments, frozen in time. From the first lecture to the final goodbye.</p>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:20px;">
+      <div class="filter-bar" style="margin:0">
+        <button class="filter-btn active" onclick="filterArchive('all',this)">All Memories</button>
+        <button class="filter-btn" onclick="filterArchive('1st yr',this)">1st yr</button>
+        <button class="filter-btn" onclick="filterArchive('2nd yr',this)">2nd yr</button>
+        <button class="filter-btn" onclick="filterArchive('3rd yr',this)">3rd yr</button>
+        <button class="filter-btn" onclick="filterArchive('4th yr',this)">4th yr</button>
+        <button class="filter-btn" onclick="filterArchive("Fiesta'25",this)">Fiesta'25</button>
+      </div>
+    </div>
+
+    <div class="archive-controls">
+      <button class="sort-btn" id="sort-btn" onclick="toggleSort()">⇅ Newest First</button>
+      <button class="upload-btn" onclick="openUpload()">+ Upload</button>
+    </div>
+
+    <div class="photo-masonry" id="archive-grid"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ THE WALL ══════════════════ -->
+<div class="page" id="wall">
+  <div class="wall-wrap">
+    <div class="wall-header">
+      <div class="wall-badge">💛 Final Goodbyes</div>
+      <h1>Message Wall of Reflection</h1>
+      <p>A space to leave your final words, memories, and wishes. These notes will remain here as a testament to our journey.</p>
+    </div>
+
+    <div class="wall-add">
+      <h3>Leave your mark</h3>
+      <div class="wall-form">
+        <input type="text" id="wall-recipient" placeholder="To whom? (name or 'Everyone')">
+        <textarea id="wall-message" placeholder="Your message, memory, or farewell..."></textarea>
+        <div class="wall-form-footer">
+          <div class="anon-toggle" id="anon-toggle" onclick="toggleAnon()">
+            <div class="toggle-box" id="anon-box"></div>
+            <span>Post anonymously</span>
+          </div>
+          <div style="flex:1"></div>
+          <input type="text" id="wall-author" placeholder="Your name" style="max-width:200px; padding:8px 12px; font-size:13px; background:var(--bg3); border:1px solid var(--border-dim); border-radius:8px; color:var(--text); outline:none; font-family:var(--sans);">
+          <button class="btn-gold" onclick="postWallMessage()">Post Note</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:13px; color:var(--text-muted); margin-bottom:24px;" id="wall-count"></div>
+    <div class="notes-grid" id="notes-grid"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ PROFILE MODAL ══════════════════ -->
+<div class="modal-backdrop" id="profile-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('profile-modal')">✕</button>
+    <div class="modal-top">
+      <div class="modal-photo" id="modal-photo">
+        <span id="modal-initials"></span>
+      </div>
+      <div class="modal-info">
+        <div>
+          <p class="modal-name" id="modal-name"></p>
+          <p class="modal-dept" id="modal-dept"></p>
+          <div class="modal-meta" id="modal-meta"></div>
+          <div class="modal-socials" id="modal-socials"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-archive">
+      <p class="archive-label">Your Archive</p>
+      <p class="archive-title" id="modal-archive-title">"Your legacy from the batch"</p>
+      <div class="messages-list" id="modal-messages"></div>
+      <div class="sign-form">
+        <textarea id="sign-message" placeholder="Leave a memory, a joke, a wish..." rows="3"></textarea>
+        <div class="sign-form-row">
+          <input type="text" id="sign-author" placeholder="Your name (leave blank for anonymous)">
+          <button class="btn-gold" onclick="signYearbook()">Sign ✦</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UPLOAD MODAL -->
+<div class="modal-backdrop" id="upload-modal">
+  <div class="upload-modal">
+    <button class="modal-close" onclick="closeModal('upload-modal')">✕</button>
+    <h2 style="font-family:var(--serif); font-size:24px; font-weight:700; margin-bottom:8px; color:var(--text);">Upload a Memory</h2>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px;">Share a photo from our journey. It will be added to the archive.</p>
+    <div class="upload-drop" onclick="document.getElementById('file-input').click()">
+      <div class="upload-drop-icon">📷</div>
+      <p>Drag & drop or <span>browse</span> your photos</p>
+      <p style="font-size:12px; color:var(--text-muted); margin-top:6px;">JPG, PNG — max 10MB</p>
+      <input type="file" id="file-input" accept="image/*" multiple style="display:none" onchange="handleUpload(this)">
+    </div>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <input type="text" id="upload-caption" placeholder="Caption (optional)" style="background:var(--bg3); border:1px solid var(--border-dim); border-radius:8px; padding:10px 14px; color:var(--text); font-family:var(--sans); font-size:13px; outline:none;">
+      <select id="upload-year" style="background:var(--bg3); border:1px solid var(--border-dim); border-radius:8px; padding:10px 14px; color:var(--text); font-family:var(--sans); font-size:13px; outline:none;">
+        <option value="1st yr">1st year</option>
+        <option value="2nd yr">2nd year</option>
+        <option value="3rd yr">3rd year</option>
+        <option value="4th yr">4th year</option>
+        <option value="Fiesta'25">Fiesta '25</option>
+      </select>
+      <button class="btn-gold" style="width:100%; padding:12px;" onclick="submitUpload()">Upload to Archive</button>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img src="" id="lightbox-img" alt="">
+</div>
+
+<script>
+// ════════════════════════════════════
+// DATA
+// ════════════════════════════════════
+const students = [
+  { id:1, name:'Aarav Sharma', dept:'CSE', roll:'B20CS001', initials:'AS', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-1', messages:[] },
+  { id:2, name:'Ananya Gupta', dept:'CSE', roll:'B20CS002', initials:'AG', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-2', messages:[{text:'You are going to do incredible things. Never stop smiling!', from:'Dev Srivastava'}] },
+  { id:3, name:'Arjun Verma', dept:'CSE(AIDS)', roll:'B20CA001', initials:'AV', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-3', messages:[] },
+  { id:4, name:'Bhavya Singh', dept:'MECH', roll:'B20ME001', initials:'BS', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-4', messages:[] },
+  { id:5, name:'Dev Srivastava', dept:'CSE', roll:'B20CS003', initials:'DS', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-5', messages:[{text:'Bro you are literally the backbone of our group. Love you buddy!', from:'Ananya Gupta'}] },
+  { id:6, name:'Ishaan Kapoor', dept:'EC', roll:'B20EC001', initials:'IK', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-1', messages:[] },
+  { id:7, name:'Kavya Reddy', dept:'CSE(AIDS)', roll:'B20CA002', initials:'KR', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-2', messages:[] },
+  { id:8, name:'Meera Nair', dept:'CIVIL', roll:'B20CI001', initials:'MN', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-3', messages:[] },
+  { id:9, name:'Mohit Jain', dept:'CSE(CYBER)', roll:'B20CC001', initials:'MJ', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-4', messages:[] },
+  { id:10, name:'Neha Agarwal', dept:'EX', roll:'B20EX001', initials:'NA', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-5', messages:[] },
+  { id:11, name:'Priya Bansal', dept:'CSE', roll:'B20CS004', initials:'PB', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-1', messages:[] },
+  { id:12, name:'Rahul Mishra', dept:'MECH', roll:'B20ME002', initials:'RM', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-2', messages:[] },
+  { id:13, name:'Riya Chandra', dept:'EC', roll:'B20EC002', initials:'RC', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-3', messages:[] },
+  { id:14, name:'Rohan Patel', dept:'CSE(CYBER)', roll:'B20CC002', initials:'RP', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-4', messages:[] },
+  { id:15, name:'Sakshi Dubey', dept:'CIVIL', roll:'B20CI002', initials:'SD', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-5', messages:[] },
+  { id:16, name:'Sanya Tiwari', dept:'CSE', roll:'B20CS005', initials:'ST', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-1', messages:[] },
+  { id:17, name:'Sheikh Uneeb', dept:'CSE', roll:'B20CS006', initials:'SU', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-2', messages:[{text:'Love you buddy...', from:'Dev Srivastava'},{text:"Years will pass, places will change, but a part of us will always stay in these moments.", from:'Anonymous'}] },
+  { id:18, name:'Shreya Pathak', dept:'EX', roll:'B20EX002', initials:'SP', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-3', messages:[] },
+  { id:19, name:'Soniya Gupta', dept:'CSE', roll:'B20CS007', initials:'SG', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-4', messages:[] },
+  { id:20, name:'Suraksha Verma', dept:'CSE', roll:'B20CS008', initials:'SV', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-5', messages:[] },
+  { id:21, name:'Tanvi Khanna', dept:'CSE(AIDS)', roll:'B20CA003', initials:'TK', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-1', messages:[] },
+  { id:22, name:'Varun Malhotra', dept:'MECH', roll:'B20ME003', initials:'VM', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-2', messages:[] },
+  { id:23, name:'Vikram Rao', dept:'CSE(CYBER)', roll:'B20CC003', initials:'VR', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-3', messages:[] },
+  { id:24, name:'Yash Pandey', dept:'EC', roll:'B20EC003', initials:'YP', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-4', messages:[] },
+  { id:25, name:'Zara Khan', dept:'EX', roll:'B20EX003', initials:'ZK', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-5', messages:[] },
+  { id:26, name:'Aloni Mourya', dept:'CSE', roll:'B20CS009', initials:'AM', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-1', messages:[] },
+  { id:27, name:'Sameer Hussain', dept:'CSE', roll:'B20CS010', initials:'SH', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-2', messages:[] },
+  { id:28, name:'Sheikh Mohd Naved', dept:'EC', roll:'B20EC004', initials:'SN', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-3', messages:[] },
+  { id:29, name:'Sonu Kumar', dept:'CSE', roll:'B20CS011', initials:'SK', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-4', messages:[] },
+  { id:30, name:'Soni Kumar', dept:'CSE', roll:'B20CS012', initials:'SK', grad:'2026', linkedin:'#', instagram:'#', bg:'ph-5', messages:[] },
+];
+
+const archivePhotos = [
+  { id:1, year:'1st yr', date:'Aug 2022', title:'Orientation Day', color:'#1a2035', h:200 },
+  { id:2, year:'1st yr', date:'Sep 2022', title:"Fresher's Night", color:'#1e1a25', h:280 },
+  { id:3, year:'1st yr', date:'Nov 2022', title:'First Class Photo', color:'#1a2520', h:240 },
+  { id:4, year:'2nd yr', date:'Jan 2023', title:'Tech Symposium', color:'#251a1a', h:180 },
+  { id:5, year:'2nd yr', date:'Mar 2023', title:'Cultural Week', color:'#1a2535', h:300 },
+  { id:6, year:'2nd yr', date:'May 2023', title:'End of 2nd Year Party', color:'#25201a', h:220 },
+  { id:7, year:'3rd yr', date:'Aug 2023', title:'Hackathon', color:'#1a2520', h:260 },
+  { id:8, year:'3rd yr', date:'Jan 2024', title:"Seniors' Farewell", color:'#201a25', h:200 },
+  { id:9, year:'3rd yr', date:'Apr 2024', title:'Industrial Visit', color:'#252015', h:240 },
+  { id:10, year:"Fiesta'25", date:'Feb 2025', title:"Fiesta '25 — Opening", color:'#25151a', h:320 },
+  { id:11, year:"Fiesta'25", date:'Feb 2025', title:'Dance Performance', color:'#151525', h:200 },
+  { id:12, year:"Fiesta'25", date:'Feb 2025', title:'Farewell to Seniors\'25', color:'#252010', h:280 },
+  { id:13, year:'4th yr', date:'Jul 2025', title:'Final Year Begins', color:'#101a25', h:220 },
+  { id:14, year:'4th yr', date:'Oct 2025', title:'Project Expo', color:'#20100f', h:260 },
+  { id:15, year:'4th yr', date:'Apr 2026', title:'Convocation', color:'#151020', h:300 },
+  { id:16, year:'4th yr', date:'May 2026', title:'Our Farewell', color:'#0f1a10', h:240 },
+];
+
+const wallMessages = [
+  { text:'Four years of fees for a full horror experience... but honestly? Best horror of my life.', from:'Anonymous', to:'Everyone', color:'note-light', r:-1 },
+  { text:'"Atharv, I know a lot of girls are probably already in line to propose to you 😅. Competition kaafi tough hai. I won\'t lie 😄 But idk what everyone thinks 🌿 Mujhe bas itna lagta hai... we should start something — maybe small, maybe slow, but definitely a little fun"', from:'Sanya T.', to:'Atharv', color:'note-yellow', r:1.5 },
+  { text:'"Atharv, I really like you. You\'re so dedicated in the gym, yet such a pookie with me — it just makes you special. And honestly, your name Atharv Rao Rege sounds perfect — especially your surname \'Rege\'. I like it very much ❤️"', from:'Kavya R.', to:'Atharv', color:'note-pink', r:-2 },
+  { text:'"I am gonna miss my halisie Dayzo 😭"', from:'Anonymous', to:'Everyone', color:'note-blue', r:0.5 },
+  { text:'"Great idea."', from:'Anonymous', to:'Everyone', color:'note-light', r:-1.5 },
+  { text:'"Years will pass, places will change, but a part of us will always stay in these moments."', from:'Sheikh Uneeb', to:'Batch 26', color:'note-green', r:1 },
+  { text:'"CSE Block, 3am chai, deadline in 2 hours, no one panicking because we are all equally dead. Miss you already."', from:'Dev S.', to:'Everyone', color:'note-yellow', r:-0.5 },
+  { text:'"To the batch that adopted me when I transferred in 2nd year — thank you for never making me feel like an outsider. This is MY batch too. 💙"', from:'Mohit J.', to:'Everyone', color:'note-blue', r:1.8 },
+  { text:'"We said we would stay in touch. Let\'s actually do it this time. Monthly call. No excuses."', from:'Priya B.', to:'The Core Group', color:'note-purple', r:-1.2 },
+  { text:'"Lab partner, midnight editor, crisis counselor. Priya, you did it all and made it look effortless."', from:'Neha A.', to:'Priya', color:'note-pink', r:0.8 },
+  { text:'"Four years ago I was terrified of public speaking. Today I hosted our farewell. This batch did that to me."', from:'Ishaan K.', to:'Everyone', color:'note-green', r:-1.8 },
+  { text:'"The chai stall outside gate 2. The arguments about nothing. The 3-hour lab sessions. I would redo all of it."', from:'Rahul M.', to:'2022-26', color:'note-light', r:2 },
+];
+
+// current state
+let activeDept = 'all';
+let activeArchiveFilter = 'all';
+let sortNewest = true;
+let isAnon = false;
+let currentStudentId = null;
+const uploadedPhotos = [];
+
+// ════════════════════════════════════
+// STARS
+// ════════════════════════════════════
+function createStars() {
+  const c = document.getElementById('heroStars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--delay:${Math.random()*4}s;opacity:${0.2+Math.random()*0.8};width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;`;
+    c.appendChild(s);
+  }
+}
+
+// ════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════
+function showSection(id) {
+  // hide all pages and hero
+  document.getElementById('hero').style.display = 'none';
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+
+  if (id === 'hero') {
+    document.getElementById('hero').style.display = 'flex';
+  } else {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
+    const navEl = document.getElementById('nav-' + id);
+    if (navEl) navEl.classList.add('active');
+  }
+
+  window.scrollTo(0, 0);
+
+  if (id === 'yearbook') renderYearbook();
+  if (id === 'archive') renderArchive();
+  if (id === 'wall') renderWall();
+  if (id === 'journey') initJourneyObserver();
+
+  return false;
+}
+
+// Intercept nav link clicks
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', e => e.preventDefault());
+});
+
+// ════════════════════════════════════
+// JOURNEY SCROLL ANIMATIONS
+// ════════════════════════════════════
+function initJourneyObserver() {
+  setTimeout(() => {
+    const entries = document.querySelectorAll('.journey-entry');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.15 });
+    entries.forEach(e => obs.observe(e));
+  }, 100);
+}
+
+// ════════════════════════════════════
+// YEARBOOK
+// ════════════════════════════════════
+function renderYearbook() {
+  const grid = document.getElementById('yearbook-grid');
+  const query = (document.getElementById('yearbook-search').value || '').toLowerCase();
+  let filtered = students.filter(s => {
+    const deptMatch = activeDept === 'all' || s.dept === activeDept;
+    const nameMatch = !query || s.name.toLowerCase().includes(query) || s.dept.toLowerCase().includes(query);
+    return deptMatch && nameMatch;
+  });
+
+  document.getElementById('yearbook-count').textContent = `${filtered.length} student${filtered.length !== 1 ? 's' : ''}`;
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1">No batchmates found for that search.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(s => `
+    <div class="student-card" onclick="openProfile(${s.id})">
+      <div class="card-photo ${s.bg}">
+        <span>${s.initials}</span>
+      </div>
+      <div class="card-info">
+        <div class="card-name">${s.name}</div>
+        <div class="card-dept">${s.dept}</div>
+        <div class="card-socials">
+          <a class="social-btn" href="${s.linkedin}" onclick="event.stopPropagation()" title="LinkedIn">in</a>
+          <a class="social-btn" href="${s.instagram}" onclick="event.stopPropagation()" title="Instagram">ig</a>
+        </div>
+      </div>
+      <div class="card-overlay">
+        <div class="card-overlay-btn">Sign Yearbook</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterDept(dept, btn) {
+  activeDept = dept;
+  document.querySelectorAll('#dept-filters .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderYearbook();
+}
+
+function filterYearbook() { renderYearbook(); }
+
+function openProfile(id) {
+  const s = students.find(x => x.id === id);
+  if (!s) return;
+  currentStudentId = id;
+
+  document.getElementById('modal-initials').textContent = s.initials;
+  document.getElementById('modal-photo').className = `modal-photo ${s.bg}`;
+  document.getElementById('modal-name').textContent = s.name;
+  document.getElementById('modal-dept').textContent = s.dept;
+  document.getElementById('modal-meta').innerHTML = `
+    <div>Enrollment: ${s.roll}</div>
+    <div>Class of ${s.grad}</div>
+  `;
+  document.getElementById('modal-socials').innerHTML = `
+    <a href="${s.linkedin}" class="modal-social">in LinkedIn</a>
+    <a href="${s.instagram}" class="modal-social">ig Instagram</a>
+  `;
+  document.getElementById('modal-archive-title').textContent = `"${s.name.split(' ')[0]}'s legacy from the batch"`;
+  renderMessages(s);
+  document.getElementById('profile-modal').classList.add('open');
+}
+
+function renderMessages(s) {
+  const list = document.getElementById('modal-messages');
+  if (!s.messages.length) {
+    list.innerHTML = '<div style="font-size:13px; color:var(--text-muted); font-style:italic; padding:8px 0;">No messages yet. Be the first to sign!</div>';
+    return;
+  }
+  list.innerHTML = s.messages.map(m => `
+    <div class="message-item">
+      <div class="message-text">"${m.text}"</div>
+      <div class="message-author">— ${m.from}</div>
+    </div>
+  `).join('');
+}
+
+function signYearbook() {
+  const text = document.getElementById('sign-message').value.trim();
+  const author = document.getElementById('sign-author').value.trim() || 'Anonymous';
+  if (!text) { showToast('Write a message first!'); return; }
+
+  const s = students.find(x => x.id === currentStudentId);
+  if (!s) return;
+
+  s.messages.unshift({ text, from: author });
+  document.getElementById('sign-message').value = '';
+  document.getElementById('sign-author').value = '';
+  renderMessages(s);
+  showToast(`✦ Signed ${s.name.split(' ')[0]}'s yearbook!`);
+}
+
+function openProfileSelf() { openProfile(17); }
+
+// ════════════════════════════════════
+// ARCHIVE
+// ════════════════════════════════════
+const photoColors = ['#151a25','#1e1520','#152015','#201510','#101520','#201a10'];
+
+function renderArchive() {
+  const grid = document.getElementById('archive-grid');
+  let photos = [...archivePhotos, ...uploadedPhotos];
+
+  if (activeArchiveFilter !== 'all') {
+    photos = photos.filter(p => p.year === activeArchiveFilter);
+  }
+
+  if (!sortNewest) photos.reverse();
+
+  if (!photos.length) {
+    grid.innerHTML = '<div class="empty-state" style="column-span:all">No photos in this category yet.</div>';
+    return;
+  }
+
+  grid.innerHTML = photos.map(p => `
+    <div class="photo-item" onclick="openLightbox('${p.url || ''}','${p.title}')">
+      <div class="photo-grid-placeholder" style="height:${p.h}px; background:${p.color};">
+        <div style="text-align:center; padding:20px;">
+          <div style="font-family:var(--serif); font-size:36px; font-weight:700; color:rgba(255,255,255,0.05); margin-bottom:8px;">${p.year}</div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.15); letter-spacing:0.08em;">${p.title.toUpperCase()}</div>
+        </div>
+      </div>
+      <div class="photo-hover">
+        <div class="photo-hover-date">${p.date}</div>
+        <div class="photo-hover-title">${p.title}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterArchive(yr, btn) {
+  activeArchiveFilter = yr;
+  document.querySelectorAll('#archive .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderArchive();
+}
+
+function toggleSort() {
+  sortNewest = !sortNewest;
+  document.getElementById('sort-btn').textContent = `⇅ ${sortNewest ? 'Newest First' : 'Oldest First'}`;
+  renderArchive();
+}
+
+function openUpload() { document.getElementById('upload-modal').classList.add('open'); }
+
+function handleUpload(input) {
+  const files = Array.from(input.files);
+  if (!files.length) return;
+  // Preview handled on submit
+}
+
+function submitUpload() {
+  const input = document.getElementById('file-input');
+  const caption = document.getElementById('upload-caption').value.trim() || 'A shared moment';
+  const year = document.getElementById('upload-year').value;
+
+  if (!input.files.length) { showToast('Please select a photo first!'); return; }
+
+  const file = input.files[0];
+  const url = URL.createObjectURL(file);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const now = new Date();
+
+  uploadedPhotos.unshift({
+    id: Date.now(),
+    year, date: `${months[now.getMonth()]} ${now.getFullYear()}`,
+    title: caption, color: photoColors[Math.floor(Math.random()*photoColors.length)],
+    h: 180 + Math.floor(Math.random()*160),
+    url
+  });
+
+  closeModal('upload-modal');
+  document.getElementById('upload-caption').value = '';
+  input.value = '';
+
+  // Reset archive filter to show all
+  activeArchiveFilter = 'all';
+  document.querySelectorAll('#archive .filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#archive .filter-btn').classList.add('active');
+
+  renderArchive();
+  showToast('📷 Photo added to the archive!');
+}
+
+function openLightbox(url, title) {
+  if (!url) { showToast('Add real photos to view them here!'); return; }
+  document.getElementById('lightbox-img').src = url;
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+
+// ════════════════════════════════════
+// THE WALL
+// ════════════════════════════════════
+const noteColors = ['note-light','note-yellow','note-pink','note-blue','note-green','note-purple'];
+const localWallMessages = [...wallMessages];
+
+function renderWall() {
+  const grid = document.getElementById('notes-grid');
+  document.getElementById('wall-count').textContent = `${localWallMessages.length} message${localWallMessages.length !== 1 ? 's' : ''} left on the wall`;
+
+  grid.innerHTML = localWallMessages.map((m, i) => `
+    <div class="note-card ${m.color}" style="--r:${m.r || (Math.random()*4-2)}deg">
+      <div class="note-pin"></div>
+      ${m.to && m.to !== 'Everyone' ? `<div style="font-size:11px; color:#8a6a40; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:8px; margin-top:4px;">To ${m.to}</div>` : ''}
+      <div class="note-text">${m.text}</div>
+      <div class="note-from">— ${m.from}</div>
+    </div>
+  `).join('');
+}
+
+function toggleAnon() {
+  isAnon = !isAnon;
+  const toggle = document.getElementById('anon-toggle');
+  const box = document.getElementById('anon-box');
+  const authorInput = document.getElementById('wall-author');
+
+  toggle.classList.toggle('checked', isAnon);
+  box.textContent = isAnon ? '✓' : '';
+  authorInput.disabled = isAnon;
+  authorInput.style.opacity = isAnon ? '0.4' : '1';
+}
+
+function postWallMessage() {
+  const text = document.getElementById('wall-message').value.trim();
+  const to = document.getElementById('wall-recipient').value.trim() || 'Everyone';
+  const from = isAnon ? 'Anonymous' : (document.getElementById('wall-author').value.trim() || 'Anonymous');
+
+  if (!text) { showToast('Write your message first!'); return; }
+
+  const randomColor = noteColors[Math.floor(Math.random()*noteColors.length)];
+  localWallMessages.unshift({ text, from, to, color: randomColor, r: (Math.random()*4-2).toFixed(1) });
+
+  document.getElementById('wall-message').value = '';
+  document.getElementById('wall-recipient').value = '';
+  if (!isAnon) document.getElementById('wall-author').value = '';
+
+  renderWall();
+  showToast('📝 Your note is on the wall!');
+}
+
+// ════════════════════════════════════
+// MODAL
+// ════════════════════════════════════
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+document.querySelectorAll('.modal-backdrop').forEach(b => {
+  b.addEventListener('click', e => { if (e.target === b) b.classList.remove('open'); });
+});
+
+// ════════════════════════════════════
+// TOAST
+// ════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ════════════════════════════════════
+// KEYBOARD
+// ════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
+    document.getElementById('lightbox').classList.remove('open');
+  }
+});
+
+// ════════════════════════════════════
+// INIT
+// ════════════════════════════════════
+createStars();
+document.getElementById('hero').style.display = 'flex';
+</script>
+</body>
+</html>
